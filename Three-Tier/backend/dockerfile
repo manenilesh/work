@@ -1,0 +1,27 @@
+FROM ubuntu:latest
+
+    LABEL Author="Nilesh"
+    
+    USER root
+
+    RUN apt update -y
+
+    RUN apt install openjdk-11-jre-headless -y
+    
+    ADD https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz /opt/
+    
+    
+    RUN tar -xvf /opt/apache-tomcat-8.5.99.tar.gz -C /opt/
+    
+    
+    EXPOSE 8080
+    
+    WORKDIR /opt/apache-tomcat-8.5.99
+
+    COPY context.xml conf/context.xml
+    
+    ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war webapps/
+
+    ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar lib/
+    
+    CMD sh bin/catalina.sh run
