@@ -1,0 +1,6 @@
+    FROM centos:7
+    RUN yum install httpd -y 
+    RUN mkdir -p /var/www/html/laptop
+    COPY index.html /var/www/html/laptop/index.html
+    EXPOSE 80
+    CMD httpd -DFOREGROUND
