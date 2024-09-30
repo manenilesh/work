@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  MyNewVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.10.0.0/17
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+
+
+
+  MySubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: 
+        !Ref MyNewVpc
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.10.0.0/18
+      
+
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: This Group is for SSH Protocol
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      VpcId:
+         !Ref MyNewVpc
+
+  MyNewInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0a3c3a20c09d6f377
+      InstanceType: t2.micro
+      KeyName: mydemokey
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+           - Ref:  "MySecurityGroup"
+          SubnetId: 
+             Ref: "MySubnet"
+  
+  
