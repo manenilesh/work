@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-dm-object
+  labels:
+    app: my-dm-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-dm-app
+    spec:
+      containers:
+        - name: my-dm-pod
+          image: mysql
+          ports:
+            - containerPort: 3306
+              name: mysql
+              protocol: TCP
+          env:
+            - name: "MYSQL_ROOT_PASSWORD"
+              value: "1234"
+  selector:
+    matchLabels:
+      app: my-dm-app

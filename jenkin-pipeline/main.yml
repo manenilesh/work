@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('git commit') {
+            steps {
+                echo 'welocme to declerative pipeline'
+                  }
+             }
+        stage('build') {
+            steps {
+                sh '''
+                echo "welocme to declerative pipeline" >> file_123.txt
+                  '''
+            }
+        }
+        stage('Deploy') {
+            steps {
+            sh '''
+              echo "welcome to deployment satage"
+            '''
+            }
+        }
+        stage('pull repo') {
+            steps {
+            echo 'pull github repositery'
+            git 'https://github.com/swapnibrad/demo_purpose.git'
+
+            }
+        }
+    }
+}

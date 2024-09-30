@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-mobile-obejct
+  labels:
+    app: mobile-app
+spec:
+  template:
+    metadata:
+      name: mobile-app
+      labels:
+        app: mobile-app
+    spec:
+      containers:
+        - name: my-mobile-pod
+          image: nileshmane912/mobile-app:latest
+          ports:
+            - name: nginx
+              protocol: TCP
+              containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mobile-app
+  strategy:
+    type: RollingUpdate

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-ss-object
+  labels:
+    app: my-ss-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-ss-app
+    spec:
+      containers:
+        - name: my-ss-pod
+          image: mysql
+          ports:
+            - containerPort: 3306
+              name: mysql
+              protocol: TCP
+          env:
+            - name: "MYSQL_ROOT_PASSWORD"
+              value: "1234"
+  selector:
+    matchLabels:
+      app: my-ss-app
+  replicas: 2

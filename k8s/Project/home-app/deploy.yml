@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy-home
+  labels:
+    app: home-app
+spec:
+  template:
+    metadata:
+      name: home-app
+      labels:
+        app: home-app
+    spec:
+      containers:
+        - name: my-home-pod
+          image: nileshmane912/home-app:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-app
+  strategy:
+    type: RollingUpdate

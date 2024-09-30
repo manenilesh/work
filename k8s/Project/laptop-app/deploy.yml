@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-laptop-obejct
+  labels:
+    app: laptop-app
+spec:
+  template:
+    metadata:
+      name: laptop-app
+      labels:
+        app: laptop-app
+    spec:
+      containers:
+        - name: my-laptop-pod
+          image: nileshmane912/laptop-app:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laptop-app
+  strategy:
+    type: RollingUpdate

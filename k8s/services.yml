@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service-object
+  namespace: ns-demo
+spec:
+  type: NodePort
+  ports:
+    - name: nginx
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: my-pod-1

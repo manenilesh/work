@@ -1,0 +1,21 @@
+pipeline
+{
+  agent any
+    stages
+    {
+      stage ('Printing')
+      {
+        steps
+        {
+        sh '''echo "This is File of Death or Life " >> Death.txt'''
+        }
+      }
+        stage ('Creating Directory')
+        {
+          steps
+          {
+            sh ''' mkdir Life'''
+          }
+        }
+    }
+}

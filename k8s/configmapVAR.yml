@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config-cred
+data:
+  DB_USER: "MYSQL_ROOT_PASSWORD"
+  DB_PASS: "nilesh"

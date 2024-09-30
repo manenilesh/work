@@ -1,0 +1,21 @@
+## configmap object pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-config-object
+  labels:
+    app: my-cm-app
+spec:
+  containers:
+    - name: my-cm-pod
+      image: mysql
+      ports:
+        - name: sql
+          containerPort: 3306
+          protocol: TCP
+      env:
+      - name: "MYSQL_ROOT_PASSWORD"
+        valueFrom:
+          configMapKeyRef:
+            name: my-config-cred
+            key: DB_PASS

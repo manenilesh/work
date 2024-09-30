@@ -1,0 +1,36 @@
+pipeline
+{
+    agent { 
+        label 'node1' 
+        }
+      stages {
+        stage ('Dowload HTTP')
+        {
+          steps
+          {
+            sh '''sudo apt update
+             sudo apt-get install apache2 -y
+             sudo systemctl start apache2'''
+          }
+        }
+        stage ('Wget')
+        {
+          steps
+          {
+            sh '''sudo wget https://www.free-css.com/assets/files/free-css-templates/download/page296/klinik.zip
+             sudo  unzip  klinik.zip
+              '''
+          }
+
+        }
+        stage('Move')
+        {
+          steps
+          {
+            sh '''cd /home/ubuntu/workspace/newproject/clinic-website-template
+            sudo mv *  /var/www/html/'''
+          }
+        }
+      }
+
+}

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-rc-object
+  labels:
+    app: my-rc-1
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-pod-1
+      namespace: ns-demo
+    spec:
+      containers:
+        - name: my-rc-pod
+          image: httpd
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+  replicas: 2
+  selector:
+    app: my-pod-1
