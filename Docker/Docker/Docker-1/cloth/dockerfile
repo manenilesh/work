@@ -1,0 +1,11 @@
+FROM centos:7
+
+LABEL author="YOGI"
+
+RUN yum install httpd -y 
+RUN mkdir /var/www/html/cloth
+COPY index.html /var/www/html/cloth/index.html
+
+EXPOSE 80
+
+CMD httpd -DFOREGROUND

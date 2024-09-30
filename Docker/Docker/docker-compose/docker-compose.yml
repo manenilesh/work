@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  service1:
+    build: backend/
+    ports:
+    - "8080:8080"
+  service2:
+    build: frontend/
+    ports:
+    - "80:80"

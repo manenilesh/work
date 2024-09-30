@@ -1,0 +1,73 @@
+---
+- name: var_1_playbook
+  hosts: all
+  become: true
+  
+  ## File Variable
+  vars_files:
+   - /home/ubuntu/ansible-pro/file_vars.yml
+    
+  
+
+  ## Global variable
+  vars:
+    Taluka: "Karad"
+
+
+
+  ## Prompt Variable
+  vars_prompt:
+    - name: current
+      prompt: "What is your Current location:"
+      private: false
+
+
+
+  tasks:
+
+    ## Console variable
+    - name: Console_variable ## It is for Understanding but it will give input console variable not here
+      vars:                  ## 1. command is ansible-playbook example.yml -e "country=India"
+        country: "Rusia"     ## 2. command is ansible-playbook example.yml --extra-vars "country=India""
+      debug:
+        msg: "My Country is {{country}}"
+
+
+
+
+    ## Local Variable
+    - name: local_variable
+      vars:
+        state: "Maharashtra"
+      debug:
+        msg: "My state is {{state}}"
+
+
+
+    ## File Variable
+    - name: File_variable
+      debug:
+        msg: "My District is {{District}}"
+
+
+    ## Global Variable
+    - name: global_variable
+      debug:
+        msg: "My Taluka is {{Taluka}}"
+
+
+    ## Host Variable
+    - name: host_variable   ## This Variable mention in Host file like "Village=Goleshwar"
+      debug:      
+        msg: "My Village is {{Village}}"
+
+    ## Prompt Variable
+    - name: prompt_varible
+      debug:
+        msg: "My currnt location is {{current}} "
+
+
+
+
+
+    ##

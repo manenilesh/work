@@ -1,0 +1,7 @@
+---
+- name: playbook_vpc
+  hosts: all
+  tasks:
+  - amazon.aws.s3_bucket:
+      name: my-ansible-s3-bucket
+      state: present

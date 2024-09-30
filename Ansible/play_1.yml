@@ -1,0 +1,10 @@
+---
+- name: playbook_1
+  hosts: webservers
+  tasks:
+  - name: Print Meassage
+    debug:
+        msg: Hello Ansible World
+  
+
+

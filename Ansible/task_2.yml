@@ -1,0 +1,17 @@
+---
+- name: playbook_2
+  hosts: all
+  tasks:
+  - name: Creating an empty file
+    file:
+        path: "/home/ubuntu/demo.txt"
+        state: touch
+
+  - name: Creating a file with content
+    copy:
+      dest: "/home/ubuntu/demo.txt"
+      content: |
+        Nilesh
+        Yogi
+        Pratu
+        Pranay

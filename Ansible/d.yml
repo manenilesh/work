@@ -1,0 +1,37 @@
+---
+- name: playbook_3_Install_Apache
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Install Apache
+    apt:
+      name: apache2
+      state: present
+
+  - name: Start Apache
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+
+  - name: Install unzip
+    apt:
+      name: unzip
+      state: present
+
+  - name: download Package
+    get_url:
+      url: https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
+      dest: /root/
+
+  - name: extract
+    unzip:
+        src: /root/little-fashion.zip
+        dest: /root/
+        remote_src: yes
+
+  - name: extract
+    ansible.builtin.copy:
+      src: /root/little-fashion/*
+      dest: /etc/foo.conf

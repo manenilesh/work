@@ -1,0 +1,34 @@
+## For Creating EC2 instance it is meandatory intalled some packages
+## All Packages install both instances 
+## Attch Role of Administrator both instance
+
+# -->> apt install awscli -y
+# -->> apt install pip 
+# -->> pip list python | grep python 
+# -->> pip install boto3 
+# -->> pip install botocore
+# -->> pip list boto3 | grep boto3
+# -->> pip list botocore | grep botocore
+
+
+
+
+
+---
+- name: playbook_4_instance_create
+  hosts: all
+  tasks:
+    - name: Create instance
+      amazon.aws.ec2_instance:
+        name: "Ansible-demo-instance"
+        key_name: "mydemokey"
+        instance_type: t2.micro
+        region: us-east-1
+        security_group: default
+        network:
+          assign_public_ip: true
+        image_id: ami-0c7217cdde317cfec
+        tags:
+          Enviornment: Demo
+
+

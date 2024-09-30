@@ -1,0 +1,12 @@
+---
+- name: playbook_4_Download Package
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Download little-fashion.zip using get_url
+      ansible.builtin.get_url:
+        url: https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
+        dest: /home/ubuntu/little-fashion.zip
+        follow_redirects: yes  # Optional, if encountering redirects
+        state: present  # Optional, only download if missing

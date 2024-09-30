@@ -1,0 +1,53 @@
+---
+- name: Create Webpage
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Update
+      apt:
+        update_cache: yes
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Install unzip
+      apt:
+        name: unzip
+        state: present
+        update_cache: yes
+
+    - name: Download Package
+      get_url:
+        url: https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
+        dest: /home/ubuntu
+        mode: 0666
+
+    - name: Extract Package
+      unarchive:
+        src: /home/ubuntu/little-fashion.zip
+        dest: /home/ubuntu/
+        remote_src: True
+        owner: ubuntu
+        group: ubuntu
+
+    - name: Rename folder
+      shell: mv /home/ubuntu/2127_little_fashion /home/ubuntu/html
+      become: True   
+
+    - name: Configure Setup
+      copy:
+        src: /home/ubuntu/html
+        dest: /var/www/
+        remote_src: True
+        owner: ubuntu
+        group: ubuntu
+        mode: 0666

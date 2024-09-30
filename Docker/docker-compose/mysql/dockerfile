@@ -1,0 +1,17 @@
+FROM mysql:latest
+
+# Set environment variable for persistence (optional)
+ENV MYSQL_DATA_DIR=/var/lib/mysql
+
+# Create the data directory within the container (optional)
+RUN mkdir -p $MYSQL_DATA_DIR
+
+# Expose the port
+EXPOSE 3306
+
+# Copy the initialization script
+COPY init_data.sql /docker-entrypoint-initdb.d/
+
+# Define the main command to run MySQL
+CMD ["mysqld", "--init-file=/docker-entrypoint-initdb.d/init_data.sql"]
+

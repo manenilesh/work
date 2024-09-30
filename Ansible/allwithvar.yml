@@ -1,0 +1,67 @@
+---
+- name: playbook_Var_all
+  hosts: all
+  tasks:
+
+  - name: Create instance
+    vars:
+      key: "mydemokey"
+      insta_type: "t2.large"
+      sg: default
+      AMI: ami-0c7217cdde317cfec
+      tag: "Ansible_var_insta"
+      amazon.aws.ec2_instance:
+        name: "Ansible-demo-instance"
+        key_name: "{{key}}"
+        instance_type: "{{insta_type}}"
+        region: "{{regions}}"
+        security_group: "{{sg}}"
+        network:
+          assign_public_ip: true
+        image_id: "{{AMI}}"
+        tags:
+          Enviornment: "{{tag}}"
+
+
+  - name: Create AWS vpc 
+    amazon.aws.ec2_vpc_net:
+      name: myfirstVPC
+      cidr_block: 50.50.0.0/16
+      region: us-east-1 
+    register: aws_vpc_info
+
+  - name: Create subnet
+    amazon.aws.ec2_vpc_subnet:
+      cidr: 50.50.0.0/17
+      region: us-east-1
+      az: us-east-1a
+      vpc_id: "{{aws_vpc_info.vpc.id}}"
+      tags:
+        Name: Ansible_subnet
+    register: aws_subnet_info
+
+  - name: Internet Gateway
+    ec2_vpc_igw:
+      region: us-east-1
+      vpc_id: "{{aws_vpc_info.vpc.id}}"
+      
+      tags:
+        Name:
+          Ansible_IGW
+    register: aws_igw_info
+
+  - name: Route table 
+    amazon.aws.ec2_vpc_route_table:
+      vpc_id: "{{aws_vpc_info.vpc.id}}"
+      region: us-east-1
+      tags:
+        Name: Public
+      subnets:
+        - "{{aws_subnet_info.subnet.id}}"
+      routes:
+        - dest: 0.0.0.0/0
+          gateway_id: "{{ aws_igw_info.gateway_id }}"
+        - dest: ::/0
+          gateway_id: "{{ aws_igw_info.gateway_id }}"
+    register: public_route_table
+    

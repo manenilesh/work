@@ -1,0 +1,16 @@
+---
+- name: playbook_rds
+  hosts: all
+  tasks:
+  - amazon.aws.rds:
+  - rds:
+      command: create
+      instance_name: ansible_rds
+      db_engine: mariadb
+      size: 10
+      instance_type: db.t3.micro
+      username: admin
+      password: 12345678
+      tags:
+        Environment: testing
+        Application: cms
